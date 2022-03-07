@@ -1,6 +1,6 @@
 {
   "name": "ffc-react-client-sdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "feature-flags.co SDK for React",
   "keywords": [
     "feature-flags.co",
@@ -16,7 +16,7 @@
     "src"
   ],
   "scripts": {
-    "build": "rimraf lib && tsc && rimraf lib/package.json lib/src",
+    "build": "rimraf lib && tsc",
     "lint": "tslint -p tsconfig.json 'src/**/*.ts*'",
     "lint:all": "npm run lint",
     "check-typescript": "tsc",
@@ -34,7 +34,6 @@
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "@types/react-test-renderer": "^17.0.1",
-    "@types/uuid": "^3.4.5",
     "enzyme": "^3.11.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
     "jest": "^27.4.4",

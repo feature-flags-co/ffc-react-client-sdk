@@ -3,17 +3,17 @@
     "outDir": "lib",
     "target": "es5",
     "lib": ["es6", "esnext", "dom"],
-    "module": "commonjs",
+    "module": "esnext",
     "declaration": true,
     "sourceMap": true,
-    "sourceRoot": "../",
+    "sourceRoot": "../src",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "jsx": "react",
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "moduleResolution": "Node"
   },
   "include": ["src"],
-  "exclude": ["node_modules", "lib", "dist", "example"]
+  "exclude": ["node_modules", "lib", "dist"]
 }

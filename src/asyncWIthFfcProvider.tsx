@@ -30,14 +30,20 @@ import { IFeatureFlagChange, IFeatureFlagSet } from 'ffc-js-client-side-sdk/esm/
  *
  * @param config - The configuration used to initialize feature-flags.co's JS SDK
  */
-export default async function asyncWithFfcProvider(config: ProviderConfig) {
+export default async function asyncWithFfcProvider(config: ProviderConfig): Promise<FunctionComponent> {
   const { options, reactOptions: userReactOptions } = config;
   const reactOptions = { ...defaultReactOptions, ...userReactOptions };
   await initClient(reactOptions, options);
 
   const FfcProvider: FunctionComponent = ({ children }) => {
     const [state, setState] = useState({
-      flags: fetchFlags(ffcClient, reactOptions),
+      flags: new Proxy(fetchFlags(ffcClient, reactOptions), {
+                get(target, prop, receiver) {
+                    const ret = Reflect.get(target, prop, receiver);
+                    ffcClient.sendFeatureFlagInsight(prop as string, ret);
+                    return ret;
+                }
+              }),
       ffcClient,
     });
 
@@ -53,7 +59,23 @@ export default async function asyncWithFfcProvider(config: ProviderConfig) {
       ffcClient.on('ff_update', (changes: IFeatureFlagChange[]) => {
         const flattened: IFeatureFlagSet = getFlattenedFlagsFromChangeset(changes, reactOptions);
         if (Object.keys(flattened).length > 0) {
-            setState(prev => ({ ...prev, flags: { ...prev.flags, ...flattened } }));
+          setState(prev => {
+            const flags = Object.keys(flattened).reduce((acc, curr) => {
+              acc[curr] = flattened[curr];
+              return acc;
+            }, prev.flags);
+  
+            return {
+              flags: new Proxy(flags, {
+                get(target, prop, receiver) {
+                    const ret = Reflect.get(target, prop, receiver);
+                    ffcClient.sendFeatureFlagInsight(prop as string, ret);
+                    return ret;
+                }
+              }),
+              ffcClient
+            };
+          });
         }
       });
     }, []);

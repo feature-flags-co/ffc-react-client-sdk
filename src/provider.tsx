@@ -55,13 +55,12 @@ import { IFeatureFlagChange, IFeatureFlagSet } from 'ffc-js-client-side-sdk/esm/
       ffcClient.on('ff_update', (changes: IFeatureFlagChange[]) => {
         const flattened: IFeatureFlagSet = getFlattenedFlagsFromChangeset(changes, this.getReactOptions());
         if (Object.keys(flattened).length > 0) {
-          //this.setState(({ flags }) => ({ flags: { ...flags, ...flattened } }));
-
-          const flags = changes.reduce((acc, curr) => {
-            acc[curr.id] = curr.newValue;
+          const flags = Object.keys(flattened).reduce((acc, curr) => {
+            acc[curr] = flattened[curr];
             return acc;
-        }, this.state.flags);
-          this.setState({flags: new Proxy(flattened, {
+          }, this.state.flags);
+
+          this.setState({flags: new Proxy(flags, {
               get(target, prop, receiver) {
                   const ret = Reflect.get(target, prop, receiver);
                   ffcClient.sendFeatureFlagInsight(prop as string, ret);
