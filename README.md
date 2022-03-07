@@ -28,19 +28,16 @@ yarn add ffc-react-client-sdk
 ### Initializing the SDK
 After you install the dependency, initialize the React SDK. You can do this in one of two ways:
 
-    - Using the asyncWithFfcProvider function
-    - Using the withFfcProvider function
+- Using the asyncWithFfcProvider function
+- Using the withFfcProvider function
 
 Both rely on React's Context API which lets you access your flags from any level of your component hierarchy.
 
-> Making feature flags available to this SDK  
-You must make feature flags available to client-side SDKs before the SDK can evaluate those flags. If an SDK tries to evaluate a feature flag that is not available, the user will receive the default value for that flag.
-
 #### Initializing using asyncWithFfcProvider
 
-The asyncWithFfcProvider function initializes the React SDK and returns a provider which is a React component. It is an async function. It accepts an ProviderConfig object.
+The **asyncWithFfcProvider** function initializes the React SDK and returns a provider which is a React component. It is an async function. It accepts a **ProviderConfig** object.
 
-asyncWithFfcProvider cannot be deferred. You must initialize asyncWithFfcProvider at the app entry point prior to rendering to ensure flags and the client are ready at the beginning of the app.
+**asyncWithFfcProvider** cannot be deferred. You must initialize **asyncWithFfcProvider** at the app entry point prior to rendering to ensure flags and the client are ready at the beginning of the app.
 
 ```javascript
 import { asyncWithFfcProvider } from 'ffc-react-client-sdk';
@@ -79,11 +76,11 @@ After initialization is complete, your flags and the client become available at 
 Because the asyncWithFfcProvider function is asynchronous, the rendering of your React app is delayed until initialization is completed. This can take up to 100 milliseconds, but often completes sooner. Alternatively, you can use the withFfcProvider function if you prefer to render your app first and then process flag updates after rendering is complete.
 
 > This function requires React 16.8.0 or later  
-The asyncWithLDProvider function uses the Hooks API, which requires React version 16.8.0 or later.
+The asyncWithFfcProvider function uses the Hooks API, which requires React version 16.8.0 or later.
 
 #### Initializing using withFfcProvider
 
-The withFfcProvider function initializes the React SDK and wraps your root component in a Context.Provider. It accepts a ProviderConfig object used to configure the React SDK.
+The **withFfcProvider** function initializes the React SDK and wraps your root component in a **Context.Provider**. It accepts a **ProviderConfig** object used to configure the React SDK.
 
 ```javascript
 import { withFfcProvider } from 'ffc-react-client-sdk';
@@ -110,7 +107,7 @@ export default withFfcProvider(config)(YourApp);
 The React SDK automatically subscribes to flag change events. This is different from the JavaScript SDK, where customers need to opt in to event listening.
 
 ### Consuming the flags
-There two ways to consume the flags.
+There are two ways to consume the flags.
 
 #### Using withFfcConsumer
 The return value of withFfcConsumer is a wrapper function that takes your component and returns a React component injected with flags & ffcClient as props.
@@ -122,14 +119,16 @@ const Home = ({ flags, ffcClient /*, ...otherProps */ }) => {
   // You can call any of the methods from the JavaScript SDK
   // ffcClient.identify({...})
 
-  return flags.devTestFlag ? <div>Flag on</div> : <div>Flag off</div>;
+  return flags['dev-test-flag'] ? <div>Flag on</div> : <div>Flag off</div>;
 };
 
 export default withFfcConsumer()(Home);
 ```
 
 #### Using Hooks
-The React SDK offers two custom hooks which you can use as an alternative to withFfcConsumer: useFlags and useFfcClient.
+The React SDK offers two custom hooks which you can use as an alternative to **withFfcConsumer**: 
+- useFlags
+- useFfcClient.
 
 > These functions require React 16.8.0 or later  
 useFlags and useFfcClient use the Hooks API, which requires React version 16.8.0 or later.
@@ -144,8 +143,12 @@ Here is an example of how to use those two hooks:
 import { useFlags, useFfcClient } from 'ffc-react-client-sdk';
 
 const MyComponent = props => {
-    const { flag1, flag2 } = useFlags();
     const ffcClient = useFfcClient();
+
+    const { flag1, flag2 } = useFlags();
+    // or use
+    const flags = useFlags();
+    // then use flags.flag1 or flags['flag1'] to reference the flag1 feature flag
     
     return (
         <div>
@@ -161,15 +164,15 @@ export default MyComponent;
 ```
 
 ### Configuring the React SDK
-the ProviderConfig object provides configuration to both **withFfcProvider** and **asyncWithFfcProvider** function.
+The **ProviderConfig** object provides configuration to both **withFfcProvider** and **asyncWithFfcProvider** function.
 
 The only mandatory property is the **options**, it is the config needed to initialize the ffc-js-client-side-sdk. To know more details about the **options**, please refer to [Initializing ffc-js-client-side-sdk](https://github.com/feature-flags-co/ffc-js-client-side-sdk#initializing-the-sdk). All other properties are React SDK related.
 
 The complete liste of the available properties:
 
 - **options**: the initialization config for ffc-js-client-side-sdk. **mandatory**
-- **reactOptions**: You can use this option to disable automatic camel casing of flag keys when using the React SDK. **not mandatory**
-- **deferInitialization**: This property allows SDK initialization to be deferred until you define the ffcClient property. **not mandatory**
+- **reactOptions**: You can use this option to enable automatic camel casing of flag keys when using the React SDK. the default value is false  **not mandatory**
+- **deferInitialization**: This property allows SDK initialization to be deferred until you define the ffcClient property. the default value is false **not mandatory**
   
     asyncWithFfcProvider does not support deferInitialization. You must initialize asyncWithFfcProvider at the app entry point prior to rendering to ensure flags and the client are ready at the beginning of your app.
 
@@ -203,13 +206,13 @@ The following is an example ProviderConfig object including each of the above pr
 ```
 
 ## Flag keys
-Feature-flags.co primarily identifies feature flags by a key which must contain only alphanumeric characters, dots (.), underscores (_), and dashes (-). These keys are used across all of our APIs as well as in the SDKs to identify flags.
+feature-flags.co primarily identifies feature flags by a key which must contain only alphanumeric characters, dots (.), underscores (_), and dashes (-). These keys are used across all of our APIs as well as in the SDKs to identify flags.
 
-However, JavaScript and React cannot access keys with a dot notation, so the React SDK can change all flag keys to camel case (you need to activate this with the **reactOptions.useCamelCaseFlagKeys** parameter). A flag with key dev-flag-test is accessible as flags.devFlagTest.
+However, JavaScript and React cannot access keys with a dot notation, so the React SDK can change all flag keys to camel case (you need to activate this with the **reactOptions.useCamelCaseFlagKeys** parameter). A flag with key dev-flag-test is accessible as flags.devFlagTest. This notation **flags['dev-flag-test']** should be used if useCamelCaseFlagKeys is disabled, which is by default.
 
 Be aware, by activating useCamelCaseFlagKeys, you would see following problems:
 
-- It is possible to induce a key collision if there are multiple flag keys which resolve to the same camel-case key. For example, dev-flag-test and dev.flag.test are unique keys in LaunchDarkly, but the React SDK changes them to the same camel-case key.
+- It is possible to induce a key collision if there are multiple flag keys which resolve to the same camel-case key. For example, dev-flag-test and dev.flag.test are unique keys, but the React SDK changes them to the same camel-case key.
 - If a flag key contains three or more capital letters in a row, the SDK automatically converts all letters between the first and last capital letter to lower case. For example, the SDK converts a flag with the key devQAFlagTest to devQaFlagTest. If you use devQAFlagTest with the useFlags() hook, the SDK does not find the flag.
 - Our code [references tool](https://github.com/feature-flags-co/ffc-code-refs-core) expects your source code to reference the exact key, not a camel-case equivalent. The tool does not detect keys that were automatically changed to camel-case.
 - Because the camel-case functionality is implemented in the React SDK instead of in the underlying JavaScript SDK, the underlying client object and functionality provided by the JavaScript SDK reflect flag keys in their original format. Only React-specific contexts such as your injected props use camel case.
