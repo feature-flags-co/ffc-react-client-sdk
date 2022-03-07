@@ -14,14 +14,10 @@ import { fetchFlags } from "./utils";
  */
  export const initClient = async (
     reactOptions: FfcReactOptions = defaultReactOptions,
-    options: IOption = { secret: '', anonymous: true },
-    cbBeforeReady?: Function,
+    options: IOption = { secret: '', anonymous: true }
   ): Promise<FfcContext> => {
     ffcClient.init({...options});
-    if (cbBeforeReady && {}.toString.call(cbBeforeReady) === '[object Function]') {
-      cbBeforeReady();
-    }
-
+    
     return new Promise<FfcContext>(resolve => {
       ffcClient.on('ready', () => {
         const flags = fetchFlags(ffcClient, reactOptions);

@@ -80,13 +80,23 @@ import { IFeatureFlagChange, IFeatureFlagSet } from 'ffc-js-client-side-sdk/esm/
         fetchedFlags = fetchFlags(client, reactOptions);
       } else {
         client = ffcClient;
-        const initialisedOutput = await initClient(reactOptions, options, () => {
-          this.subscribeToChanges(client);
-        });
+        const initialisedOutput = await initClient(reactOptions, options);
         fetchedFlags = initialisedOutput.flags;
         client = initialisedOutput.ffcClient;
       }
-      this.setState({ flags: fetchedFlags, ffcClient: client });
+
+      this.setState({ 
+        flags: new Proxy(fetchedFlags, {
+          get(target, prop, receiver) {
+              const ret = Reflect.get(target, prop, receiver);
+              client.sendFeatureFlagInsight(prop as string, ret);
+              return ret;
+          }
+        }),
+        ffcClient: client
+      });
+
+      this.subscribeToChanges(client);
     };
   
     async componentDidMount() {
