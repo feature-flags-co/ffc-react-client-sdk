@@ -1,13 +1,20 @@
 # React client side SDK
 
-
 ## Introduction
 This is the react client side SDK for the feature management platform [feature-flags.co](feature-flags.co). We will document all the methods available in this SDK, and detail how they work.
 
 > Be aware, this is a client side SDK, it is intended for use in a single-user context, which can be mobile, desktop or embeded applications. This SDK can only be ran in a browser environment, it is not suitable for React Native projects, React Native SDK will be available in our other repo.
 
-> The React SDK is based on the JavaScript SDK  
-The React SDK builds on feature-flags.co's JavaScript SDK to provide a better integration for use in React applications. As a result, much of the JavaScript SDK functionality is also available for the React SDK to use. To know more about our javascript client side sdk, go to this repo [ffc-js-client-side-sdk](https://github.com/feature-flags-co/ffc-js-client-side-sdk)
+The React SDK is based on the JavaScript SDK  
+The React SDK builds on feature-flags.co's JavaScript SDK to provide a better integration for use in React applications. As a result, much of the JavaScript SDK functionality is also available for the React SDK to use. 
+Here are some useful topics:
+
+- [Initializing the JavaScript client SDK](https://github.com/feature-flags-co/ffc-js-client-side-sdk#initializing-the-sdk)
+- [Activating developer mode](https://github.com/feature-flags-co/ffc-js-client-side-sdk#developer-mode)
+- [Bootstraping with feature flags](https://github.com/feature-flags-co/ffc-js-client-side-sdk#developer-mode)
+- [Switching to another user](https://github.com/feature-flags-co/ffc-js-client-side-sdk#set-the-user-after-initialization)
+
+To know more about our JavaScript client SDK, go to this repo [ffc-js-client-side-sdk](https://github.com/feature-flags-co/ffc-js-client-side-sdk)
 
 > SDK version compatibility  
 The React SDK is compatible with React version 16.3.0 and higher.
