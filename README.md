@@ -107,9 +107,60 @@ export default withFfcProvider(config)(YourApp);
 The React SDK automatically subscribes to flag change events. This is different from the JavaScript SDK, where customers need to opt in to event listening.
 
 ### Consuming the flags
+
+#### Class component
+
 There are two ways to consume the flags.
 
-#### Using withFfcConsumer
+##### Using contextType property
+```javascript
+import { context } from 'ffc-react-client-sdk';
+
+class MyComponent extends React.Component {
+  static contextType = context;
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { flags } = this.context;
+
+    return (
+      <div>{ flags['dev-test-flag'] ? 'Flag on' : 'Flag off' }</div>
+    )
+  }
+}
+
+export default MyComponent;
+```
+
+#####  Using withFfcConsumer
+
+The return value of withFfcConsumer is a wrapper function that takes your component and returns a React component injected with flags & ffcClient as props.
+
+```javascript
+import { withFfcConsumer } from 'ffc-react-client-sdk';
+
+class MyComponent extends React.Component {
+    render() {
+      const { flags } = this.props;
+
+      return (
+        <div>
+          <div>{flags.flag1}</div>
+        </div>
+      );
+    }
+  }
+
+  export default withFfcConsumer()(Board)
+```
+
+#### Function component
+There are two ways to consume the flags.
+
+##### Using withFfcConsumer
 The return value of withFfcConsumer is a wrapper function that takes your component and returns a React component injected with flags & ffcClient as props.
 
 ```javascript
@@ -125,7 +176,7 @@ const Home = ({ flags, ffcClient /*, ...otherProps */ }) => {
 export default withFfcConsumer()(Home);
 ```
 
-#### Using Hooks
+##### Using Hooks
 The React SDK offers two custom hooks which you can use as an alternative to **withFfcConsumer**: 
 - useFlags
 - useFfcClient.
