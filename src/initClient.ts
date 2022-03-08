@@ -16,12 +16,12 @@ import { fetchFlags } from "./utils";
     reactOptions: FfcReactOptions = defaultReactOptions,
     options: IOption = { secret: '', anonymous: true }
   ): Promise<FfcContext> => {
-    ffcClient.init({...options});
-    
     return new Promise<FfcContext>(resolve => {
       ffcClient.on('ready', () => {
         const flags = fetchFlags(ffcClient, reactOptions);
         resolve({ flags, ffcClient });
       });
+      
+      ffcClient.init({...options});
     });
   };
