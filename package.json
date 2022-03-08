@@ -1,6 +1,6 @@
 {
   "name": "ffc-react-client-sdk",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "feature-flags.co SDK for React",
   "keywords": [
     "feature-flags.co",
@@ -9,6 +9,11 @@
   ],
   "author": "北京心跳率科技有限公司",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feature-flags-co/ffc-react-client-sdk"
+  },
+  "homepage": "https://github.com/feature-flags-co/ffc-react-client-sdk",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
