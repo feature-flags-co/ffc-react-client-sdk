@@ -171,6 +171,8 @@ The only mandatory property is the **options**, it is the config needed to initi
 The complete liste of the available properties:
 
 - **options**: the initialization config for ffc-js-client-side-sdk. **mandatory**
+
+    You can use the **options.bootstrap** option to populate the SDK with default values. For more details, go to [ref](https://github.com/feature-flags-co/ffc-js-client-side-sdk#initializing-the-sdk)
 - **reactOptions**: You can use this option to enable automatic camel casing of flag keys when using the React SDK. the default value is false  **not mandatory**
 - **deferInitialization**: This property allows SDK initialization to be deferred until you define the ffcClient property. the default value is false **not mandatory**
   
