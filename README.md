@@ -1,5 +1,7 @@
 # React client side SDK
 
+Check this [repository](https://github.com/feature-flags-co/ffc-react-client-sdk-demo) for an demo
+
 ## Introduction
 This is the react client side SDK for the feature management platform [feature-flags.co](feature-flags.co). We will document all the methods available in this SDK, and detail how they work.
 
