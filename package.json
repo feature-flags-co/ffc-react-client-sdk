@@ -1,7 +1,7 @@
 {
   "name": "ffc-react-client-sdk",
-  "version": "0.0.8",
-  "description": "feature-flags.co SDK for React",
+  "version": "0.0.9",
+  "description": "featureflag.co SDK for React",
   "keywords": [
     "feature-flags.co",
     "敏捷开关",
@@ -57,7 +57,7 @@
     "typescript": "^4.5.3"
   },
   "dependencies": {
-    "ffc-js-client-side-sdk": "^1.0.25",
+    "ffc-js-client-side-sdk": "1.0.27",
     "hoist-non-react-statics": "^3.3.2",
     "lodash.camelcase": "^4.3.0"
   },
