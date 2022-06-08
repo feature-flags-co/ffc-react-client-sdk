@@ -1,6 +1,6 @@
 {
   "name": "ffc-react-client-sdk",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "featureflag.co SDK for React",
   "keywords": [
     "feature-flags.co",
