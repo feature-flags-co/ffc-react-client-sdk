@@ -1,4 +1,7 @@
 # React client side SDK
+>If you are using react with redux or Jotai as state management library, you may want to check the following demos, they are using [ffc-js-client-side-sdk](https://github.com/feature-flags-co/ffc-js-client-side-sdk) directly instead of the current react sdk.
+>1. [React with redux](https://github.com/feature-flags-co/ffc-js-client-side-sdk-react-redux-demo)
+>2. [React with Jotai](https://github.com/feature-flags-co/ffc-js-client-side-sdk-react-jotai-demo)
 
 Check this [repository](https://github.com/feature-flags-co/ffc-react-client-sdk-demo) for an demo
 
